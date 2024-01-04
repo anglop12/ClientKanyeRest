@@ -1,5 +1,7 @@
 import './bootstrap';
 import {createApp} from 'vue'
+import { useUser } from './stores/user';
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
@@ -23,7 +25,19 @@ const vuetify = createVuetify({
     directives,
 })
 
-createApp(App)
-    .use(vuetify)
-    .use(router)
-    .mount("#app")
+const pinia = createPinia()
+const app = createApp(App)
+app.use(vuetify)
+app.use(router)
+app.use(pinia)
+const main = useUser()
+
+router.beforeEach((to) => {
+    // ✅ Esto funcionará si te aseguras que usas el almacén
+    // correcto en la aplicación que está siendo ejecutada
+
+    if (to.meta.requiresAuth && !main.auth) return '/login'
+})
+
+
+app.mount("#app")
