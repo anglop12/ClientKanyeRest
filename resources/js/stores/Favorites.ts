@@ -14,13 +14,15 @@ type Favorite = {
 type State = {
     quotes: Favorite[]
     loading: boolean
+    error: any
 }
 
 export const useFavorite = defineStore('favorite', {
 
   state: (): State => ({
     quotes: [],
-    loading: false
+    loading: false,
+    error: false
   }),
 
   getters: {
@@ -33,8 +35,8 @@ export const useFavorite = defineStore('favorite', {
             .then(response => {
                 this.quotes = response.data;
             })
-            .catch(() => {
-                this.quotes = [];
+            .catch(error => {
+                this.error = error.response.data;
             })
             .finally(() => {
                 this.loading = false;
@@ -47,8 +49,8 @@ export const useFavorite = defineStore('favorite', {
             .then(response => {
                 this.quotes.push(response.data);
             })
-            .catch(() => {
-                this.quotes = [];
+            .catch(error => {
+                this.error = error.response.data;
             })
             .finally(() => {
                 this.loading = false;
@@ -60,8 +62,8 @@ export const useFavorite = defineStore('favorite', {
             .then(response => {
                 this.quotes = response.data;
             })
-            .catch(() => {
-                this.quotes = [];
+            .catch(error => {
+                this.error = error.response.data;
             })
             .finally(() => {
                 this.loading = false;

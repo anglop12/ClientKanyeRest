@@ -15,7 +15,7 @@
                                 </v-toolbar-title>
 
                                 <template v-slot:append>
-                                    <v-btn icon="refresh"></v-btn>
+                                    <v-btn @click="refreshQuotes()" icon="refresh"></v-btn>
                                 </template>
 
                             </v-toolbar>
@@ -25,16 +25,32 @@
                     <v-card-text>
                         <v-container>
                             <v-row dense>
-                                <v-col cols="12">
-                                    <v-card class="mx-auto" color="#1F7087" variant="tonal">
+                                <v-col cols="12" v-for="(item, index) in quoteStore.quotes" :key="index" >
+                                    <v-card v-if="!quoteStore.loading" class="mx-auto" color="#1F7087" variant="tonal">
 
-                                        <template v-slot:title>This is a title</template>
+                                        <template v-slot:title>{{item.quote}}</template>
 
                                         <template v-slot:append>
-                                            <v-btn icon="star">
-                                                <v-icon color="grey-lighten-3" icon="star"></v-icon>
+                                            <v-btn :disabled="favoriteStore.quotes.findIndex((element) => element.quote == item.quote) >= 0 ? true : false" @click="saveFavorites(item)" icon="star">
+                                                <v-icon :color="favoriteStore.quotes.findIndex((element) => element.quote == item.quote) === -1 ? 'grey-lighten-3' : 'yellow'" icon="star"></v-icon>
                                             </v-btn>
                                         </template>
+
+                                    </v-card>
+                                    <v-card v-else class="mx-auto" color="#1F7087" variant="tonal">
+                                        <v-card-text>
+                                            <v-skeleton-loader
+                                                :loading="quoteStore.loading"
+                                                type="list-item-two-line"
+                                            >
+                                                <v-list-item
+                                                    title="Title"
+                                                    subtitle="Subtitle"
+                                                    lines="two"
+                                                    rounded
+                                                ></v-list-item>
+                                            </v-skeleton-loader>
+                                        </v-card-text>
 
                                     </v-card>
                                 </v-col>
@@ -48,28 +64,30 @@
     </v-row>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { useQuote } from '../stores/Quotes';
+import { useFavorite } from '../stores/Favorites';
 
-export default defineComponent({
- components: {
- },
- setup() {
-    const quotes = ref([]);
+const quoteStore = useQuote();
+const favoriteStore = useFavorite();
 
-    const getQuotes = async () => {
-      // Replace this URL with your own API endpoint that returns Kayne West quotes
-      const response = await fetch('https://api.example.com/kanye-quotes');
-      const data = await response.json();
-      quotes.value = data.slice(0, 5);
-    };
+const refreshQuotes = async () => {
+    quoteStore.loading = true;
+    for (let index = 0; index < 5; index++) {
+        await quoteStore.getOneQuote();
+    }
+    quoteStore.loading = false;
+};
 
-    const saveFavorite = (quote : { quote: string }) => {
-      // Save the quote as a favorite here
-      console.log('Saving quote as favorite:', quote);
-    };
+const saveFavorites = async (quote : { quote: string } ) => {
+    await favoriteStore.setFavorites(quote)
+    await favoriteStore.getFavorites()
+};
 
-    return { quotes, getQuotes, saveFavorite };
- },
+onMounted(async () => {
+    await favoriteStore.getFavorites()
+    await quoteStore.getFiveQuotes()
 });
+
 </script>
