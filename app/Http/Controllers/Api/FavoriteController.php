@@ -42,8 +42,9 @@ class FavoriteController extends Controller
      * @param  \App\Models\Favorite $favorite
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Favorite $favorite)
+    public function destroy($favoriteId)
     {
+        $favorite = Favorite::find($favoriteId);
         $favorite->delete();
         return response()->json(['message' => 'La cita de Kanye West se elimino exitosamente.']);
     }
