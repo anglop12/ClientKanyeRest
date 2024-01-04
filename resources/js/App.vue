@@ -22,7 +22,7 @@
 
           <template v-slot:append>
             <div class="pa-2">
-              <v-btn v-if="userStore.getAuth" block>
+              <v-btn v-if="userStore.getAuth" @click="logout()" block>
                 Logout
               </v-btn>
               <v-btn to="/login" v-else block>
@@ -38,14 +38,32 @@
     </v-layout>
 </template>
 
-<script setup lang="ts">
-import { onMounted } from 'vue';
-import { useUser } from './stores/User';
+<script lang="ts">
+    import { defineComponent } from 'vue';
+    import { useUser } from './stores/User';
 
-const userStore = useUser();
+    export default defineComponent({
 
-onMounted(async () => {
-    await userStore.setUser()
-});
+        data() {
+            return {
+                userStore: useUser()
+            }
+        },
 
+        async mounted() {
+            if (!this.userStore.auth) {
+                this.$router.push({ name: 'login' })
+            }
+        },
+
+        methods: {
+            async logout () {
+                await this.userStore.logout()
+
+                if (!this.userStore.auth) {
+                    this.$router.push({ name: 'login' })
+                }
+            },
+        }
+    })
 </script>

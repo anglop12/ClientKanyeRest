@@ -32,8 +32,8 @@ export const useUser = defineStore('user', {
         restoreRponse() {
             this.response = null;
         },
-        logout() {
-            axios.post('api/logout').then(response => {
+        async logout() {
+            await axios.post('api/logout').then(response => {
                 this.user = null;
                 this.token = '';
                 this.auth = false;
