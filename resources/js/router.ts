@@ -14,6 +14,12 @@ const route = createRouter({
       meta: {requiresAuth: false}
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('./pages/Login.vue'),
+      meta: {requiresAuth: false}
+    },
+    {
       path: '/quotes',
       name: 'quotes',
       component: () => import('./pages/Quotes.vue'),

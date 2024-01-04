@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useUser } from './stores/user';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8000/',
@@ -7,6 +8,21 @@ const instance = axios.create({
     'Content-Type': 'application/json'
 }
 });
+
+instance.interceptors.request.use(
+
+    (config) => {
+        const userStore = useUser();
+        const token = userStore.token;
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+);
 
 instance.interceptors.response.use(
   response => {
