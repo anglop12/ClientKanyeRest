@@ -14,6 +14,6 @@ class Favorite extends Model
     public $timestamps = true;
 
     public $fillable = [
-        'quote'
+        'quote', 'user_id'
     ];
 }

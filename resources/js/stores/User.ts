@@ -13,6 +13,7 @@ interface UserRegister {
 }
 
 interface User {
+    id: number;
     name: string;
     email: string;
     role: string;
@@ -74,7 +75,7 @@ export const useUser = defineStore('user', {
         async setUser() {
             await axios.get('api/user')
             .then(response => {
-                this.user = response.data.user;
+                this.user = response.data;
             })
             .catch(() => {
                 this.user = null;
@@ -82,7 +83,7 @@ export const useUser = defineStore('user', {
                 this.auth = false;
             });
         },
-        checkToken() {
+        async checkToken() {
             const token = localStorage.getItem('token');
             if (token) {
                 this.token = token;
@@ -105,7 +106,7 @@ export const useUser = defineStore('user', {
                         this.token = '';
                         this.auth = false;
                     } else {
-                        this.setUser()
+                        await this.setUser()
                     }
                 } else {
                     this.user = null;

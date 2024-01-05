@@ -4,11 +4,13 @@ import axios from '../axios'
 
 type Quote = {
     quote: string
+    user_id: number
 }
 
 type Favorite = {
     id: number
     quote: string
+    user_id: number
 }
 
 type State = {

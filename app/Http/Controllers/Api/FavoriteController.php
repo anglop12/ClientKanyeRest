@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FavoriteRequest;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
@@ -16,7 +17,7 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $favorites = Favorite::get()->toArray();
+        $favorites = Favorite::where('user_id', Auth::user()->id)->get()->toArray();
         return response()->json($favorites);
     }
 
