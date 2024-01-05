@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useUser } from './stores/user';
+import { useAuth } from './stores/Auth';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8000/',
@@ -12,8 +12,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
 
     (config) => {
-        const userStore = useUser();
-        const token = userStore.token;
+        const authStore = useAuth();
+        const token = authStore.token;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

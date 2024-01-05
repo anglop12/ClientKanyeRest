@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from '../axios'
 
-interface UserLogin {
-    user: string;
+interface AuthLogin {
     email: string;
+    password: string;
 }
 
-interface UserRegister {
+interface AuthRegister {
     name: string;
     email: string;
     password: string | null;
@@ -19,16 +19,16 @@ interface User {
     role: string;
 }
 
-interface UserState {
+interface AuthState {
     user: User | null;
     auth: boolean;
     token: string;
     response: any;
 }
 
-export const useUser = defineStore('user', {
+export const useAuth = defineStore('auth', {
 
-    state: (): UserState => ({
+    state: (): AuthState => ({
         user: null,
         auth: false,
         token: '',
@@ -52,14 +52,14 @@ export const useUser = defineStore('user', {
                 localStorage.removeItem('token');
             });
         },
-        async editUser(credentials : UserRegister) {
-            await axios.post(`api/editUser/${this.user.id}`, credentials).then(response => {
+        async editAuth(credentials : AuthRegister) {
+            await axios.post(`api/editAuth/${this.user.id}`, credentials).then(response => {
                 this.user = response.data.user;
             }).catch((error) => {
                 this.response = error.response.data;
             });
         },
-        async login(credentials : UserLogin) {
+        async login(credentials : AuthLogin) {
             await axios.post('api/login', credentials).then(response => {
                 this.token = response.data.access_token;
                 localStorage.setItem('token', this.token);
@@ -69,7 +69,7 @@ export const useUser = defineStore('user', {
                 this.response = error.response.data;
             });
         },
-        async register(credentials : UserRegister) {
+        async register(credentials : AuthRegister) {
             await axios.post('api/register', credentials).then(response => {
                 this.token = response.data.access_token;
                 localStorage.setItem('token', this.token);
@@ -79,7 +79,7 @@ export const useUser = defineStore('user', {
                 this.response = error.response.data;
             });
         },
-        async setUser() {
+        async setAuth() {
             await axios.get('api/user')
             .then(response => {
                 this.user = response.data;
@@ -113,7 +113,7 @@ export const useUser = defineStore('user', {
                         this.token = '';
                         this.auth = false;
                     } else {
-                        await this.setUser()
+                        await this.setAuth()
                     }
                 } else {
                     this.user = null;

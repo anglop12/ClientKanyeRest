@@ -21,7 +21,7 @@
 
 
                     <v-card class="mx-auto px-6 py-8" max-width="344">
-                        <v-form v-model="form" @submit.prevent="onEditUser">
+                        <v-form v-model="form" @submit.prevent="onEditAuth">
 
                             <v-text-field
                                 v-model="name"
@@ -83,7 +83,7 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
-    import { useUser } from '../stores/User';
+    import { useAuth } from '../stores/Auth';
 
     export default defineComponent({
 
@@ -101,22 +101,22 @@
                 password: null,
                 loading: false,
 
-                user: null,
+                auth: null,
 
-                userStore: useUser()
+                authStore: useAuth()
             }
         },
 
         async mounted() {
-            this.name = this.userStore.user.name
-            this.email = this.userStore.user.email
+            this.name = this.authStore.user.name
+            this.email = this.authStore.user.email
         },
 
         watch: {
         },
 
         methods: {
-            async onEditUser () {
+            async onEditAuth () {
                 if (!this.form) return
 
                 this.loading = true
@@ -126,14 +126,14 @@
                     password: this.password || null
                 }
 
-                await this.userStore.editUser(data)
+                await this.authStore.editAuth(data)
 
-                if (this.userStore.response !== null) {
+                if (this.authStore.response !== null) {
                     this.alert = true;
-                    this.msg = this.userStore.response.message;
+                    this.msg = this.authStore.response.message;
                 }
                 this.loading = false;
-                this.userStore.restoreRponse()
+                this.authStore.restoreRponse()
             },
             required (v) {
                 return !!v || 'Field is required'

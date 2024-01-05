@@ -7,11 +7,11 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn class="ml-2" v-if="!userStore.getAuth" to="/register">
+            <v-btn class="ml-2" v-if="!authStore.getAuth" to="/register">
                 Register
             </v-btn>
 
-            <v-btn class="ml-2" v-if="!userStore.getAuth" to="/login">
+            <v-btn class="ml-2" v-if="!authStore.getAuth" to="/login">
                 Login
             </v-btn>
         </v-app-bar>
@@ -23,8 +23,8 @@
         >
             <v-list>
                 <v-list-item
-                :title="userStore.user?.name"
-                :subtitle="userStore.user?.email"
+                :title="authStore.user?.name"
+                :subtitle="authStore.user?.email"
                 ></v-list-item>
             </v-list>
 
@@ -32,14 +32,14 @@
 
             <v-list density="compact" nav>
                 <v-list-item to="/home" icon="mdi-folder" title="Home" value="Home"></v-list-item>
-                <v-list-item v-if="userStore.role == 'admin'" to="/users" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
+                <v-list-item v-if="authStore.user?.role == 'admin'" to="/auths" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
                 <v-list-item to="/quotes" icon="mdi-account-multiple" title="Quotes" value="Quotes"></v-list-item>
                 <v-list-item to="/favorites" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
             </v-list>
 
             <template v-slot:append>
                 <div class="pa-2">
-                <v-btn v-if="userStore.getAuth" @click="logout()" block>
+                <v-btn v-if="authStore.getAuth" @click="logout()" block color="grey-lighten-1">
                     Logout
                 </v-btn>
                 <v-btn to="/login" v-else block>
@@ -57,28 +57,28 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
-    import { useUser } from './stores/User';
+    import { useAuth } from './stores/Auth';
 
     export default defineComponent({
 
         data() {
             return {
-                userStore: useUser(),
+                authStore: useAuth(),
                 drawer: false,
             }
         },
 
         async mounted() {
-            if (!this.userStore.auth) {
+            if (!this.authStore.auth) {
                 this.$router.push({ name: 'login' })
             }
         },
 
         methods: {
             async logout () {
-                await this.userStore.logout()
+                await this.authStore.logout()
 
-                if (!this.userStore.auth) {
+                if (!this.authStore.auth) {
                     this.$router.push({ name: 'login' })
                 }
             },

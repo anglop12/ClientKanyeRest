@@ -68,11 +68,11 @@
 import { onMounted } from 'vue';
 import { useQuote } from '../stores/Quotes';
 import { useFavorite } from '../stores/Favorites';
-import { useUser } from '../stores/User';
+import { useAuth } from '../stores/Auth';
 
 const quoteStore = useQuote();
 const favoriteStore = useFavorite();
-const userStore = useUser();
+const authStore = useAuth();
 
 const refreshQuotes = async () => {
     quoteStore.loading = true;
@@ -85,8 +85,8 @@ const refreshQuotes = async () => {
 const saveFavorites = async (quote : { quote: string } ) => {
 
     let data = {
-        "user_id": userStore.user?.id,
-        "quote": quote.quote
+        "quote": quote.quote,
+        "user_id": authStore.user?.id
     }
     await favoriteStore.setFavorites(data)
     await favoriteStore.getFavorites()

@@ -1,6 +1,6 @@
 import './bootstrap';
 import {createApp} from 'vue'
-import { useUser } from './stores/user';
+import { useAuth } from './stores/auth';
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
@@ -30,7 +30,7 @@ const app = createApp(App)
 app.use(vuetify)
 app.use(router)
 app.use(pinia)
-const main = useUser()
+const main = useAuth()
 await main.checkToken();
 
 router.beforeEach((to) => {

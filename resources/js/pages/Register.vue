@@ -60,7 +60,7 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
-    import { useUser } from '../stores/User';
+    import { useAuth } from '../stores/Auth';
 
     export default defineComponent({
 
@@ -78,12 +78,12 @@
                 password: null,
                 loading: false,
 
-                userStore: useUser()
+                authStore: useAuth()
             }
         },
 
         async mounted() {
-            if (this.userStore.auth) {
+            if (this.authStore.auth) {
                 this.$router.push({ name: 'home' })
             }
         },
@@ -102,16 +102,16 @@
                     password: this.password
                 }
 
-                await this.userStore.register(data)
+                await this.authStore.register(data)
 
-                if (this.userStore.response !== null) {
+                if (this.authStore.response !== null) {
                     this.alert = true;
-                    this.msg = this.userStore.response.message;
+                    this.msg = this.authStore.response.message;
                 } else {
                     this.$router.push({ name: 'home' })
                 }
                 this.loading = false;
-                this.userStore.restoreRponse()
+                this.authStore.restoreRponse()
             },
             required (v) {
                 return !!v || 'Field is required'
