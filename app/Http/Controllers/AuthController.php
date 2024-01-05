@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -49,6 +50,27 @@ class AuthController extends Controller
             'role' => 'user',
             'password' => bcrypt($validatedData['password']),
         ]);
+
+        $accessToken = $user->createToken('authToken')->accessToken;
+
+        return response(['user' => $user, 'access_token' => $accessToken]);
+    }
+
+    public function editUser(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)]
+        ]);
+
+        $user = User::find($id);
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        if (isset($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
+        $user->save();
 
         $accessToken = $user->createToken('authToken')->accessToken;
 

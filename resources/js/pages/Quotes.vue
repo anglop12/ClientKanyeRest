@@ -88,7 +88,6 @@ const saveFavorites = async (quote : { quote: string } ) => {
         "user_id": userStore.user?.id,
         "quote": quote.quote
     }
-    console.log(data)
     await favoriteStore.setFavorites(data)
     await favoriteStore.getFavorites()
 };

@@ -31,7 +31,7 @@ app.use(vuetify)
 app.use(router)
 app.use(pinia)
 const main = useUser()
-main.checkToken();
+await main.checkToken();
 
 router.beforeEach((to) => {
     // ✅ Esto funcionará si te aseguras que usas el almacén

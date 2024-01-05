@@ -9,7 +9,7 @@ interface UserLogin {
 interface UserRegister {
     name: string;
     email: string;
-    password: string;
+    password: string | null;
 }
 
 interface User {
@@ -50,6 +50,13 @@ export const useUser = defineStore('user', {
                 this.token = '';
                 this.auth = false;
                 localStorage.removeItem('token');
+            });
+        },
+        async editUser(credentials : UserRegister) {
+            await axios.post(`api/editUser/${this.user.id}`, credentials).then(response => {
+                this.user = response.data.user;
+            }).catch((error) => {
+                this.response = error.response.data;
             });
         },
         async login(credentials : UserLogin) {
