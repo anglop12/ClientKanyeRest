@@ -1,35 +1,42 @@
 <template>
     <v-layout>
+        <v-app-bar color="primary" prominent v-if="this.$route.name != 'login' && this.$route.name != 'register'">
+            <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>Test Kanye West Quotes</v-toolbar-title>
+        </v-app-bar>
+
         <v-navigation-drawer
             v-if="this.$route.name != 'login' && this.$route.name != 'register'"
-            expand-on-hover
+            v-model="drawer"
+            temporary
         >
-          <v-list>
-            <v-list-item
-              prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-              title="Sandra Adams"
-              subtitle="sandra_a88@gmailcom"
-            ></v-list-item>
-          </v-list>
+            <v-list>
+                <v-list-item
+                prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                title="Sandra Adams"
+                subtitle="sandra_a88@gmailcom"
+                ></v-list-item>
+            </v-list>
 
-          <v-divider></v-divider>
+            <v-divider></v-divider>
 
-          <v-list density="compact" nav>
-            <v-list-item to="/home" icon="mdi-folder" title="Home" value="Home"></v-list-item>
-            <v-list-item to="/quotes" icon="mdi-account-multiple" title="Quotes" value="Quotes"></v-list-item>
-            <v-list-item to="/favorites" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
-          </v-list>
+            <v-list density="compact" nav>
+                <v-list-item to="/home" icon="mdi-folder" title="Home" value="Home"></v-list-item>
+                <v-list-item v-if="userStore.role == 'admin'" to="/users" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
+                <v-list-item to="/quotes" icon="mdi-account-multiple" title="Quotes" value="Quotes"></v-list-item>
+                <v-list-item to="/favorites" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
+            </v-list>
 
-          <template v-slot:append>
-            <div class="pa-2">
-              <v-btn v-if="userStore.getAuth" @click="logout()" block>
-                Logout
-              </v-btn>
-              <v-btn to="/login" v-else block>
-                Login
-              </v-btn>
-            </div>
-          </template>
+            <template v-slot:append>
+                <div class="pa-2">
+                    <v-btn v-if="userStore.getAuth" @click="logout()" block>
+                        Logout
+                    </v-btn>
+                    <v-btn to="/login" v-else block>
+                        Login
+                    </v-btn>
+                </div>
+            </template>
         </v-navigation-drawer>
 
         <v-main style="height: 100dvh">
@@ -46,7 +53,8 @@
 
         data() {
             return {
-                userStore: useUser()
+                userStore: useUser(),
+                drawer: false,
             }
         },
 
