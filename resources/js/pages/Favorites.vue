@@ -44,9 +44,16 @@
     import { onMounted } from 'vue';
     import { useFavorite } from '../stores/Favorites';
 
+    type Favorite = {
+        id: number
+        quote: string
+        user_id: number
+        user_name: string
+    }
+
     const favoriteStore = useFavorite();
 
-    const deleteFavorites = async (quote : { id:number, quote: string } ) => {
+    const deleteFavorites = async (quote : Favorite ) => {
         await favoriteStore.deleteFavorites(quote)
         await favoriteStore.getFavorites()
     };

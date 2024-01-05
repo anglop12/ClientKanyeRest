@@ -5,12 +5,14 @@ import axios from '../axios'
 type Quote = {
     quote: string
     user_id: number
+    user_name: string
 }
 
 type Favorite = {
     id: number
     quote: string
     user_id: number
+    user_name: string
 }
 
 type State = {
