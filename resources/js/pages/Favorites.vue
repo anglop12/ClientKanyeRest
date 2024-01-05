@@ -22,13 +22,13 @@
                         <thead>
                             <tr>
                                 <th class="text-left"> Quotes </th>
-                                <th class="text-left"> Delete </th>
+                                <th class="text-right"> Delete </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in favoriteStore.quotes" :key="item.id">
                                 <td>{{ item.quote }}</td>
-                                <td><v-btn icon="delete" size="x-small" @click="deleteFavorites(item)"></v-btn></td>
+                                <td class="text-right"><v-btn icon="delete" size="x-small" @click="deleteFavorites(item)"></v-btn></td>
                             </tr>
                         </tbody>
                     </v-table>

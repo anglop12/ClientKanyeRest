@@ -29,12 +29,12 @@ class FavoriteController extends Controller
      */
     public function store(FavoriteRequest $request)
     {
-        $school = new Favorite($request->all());
-        $school->save();
+        $favorite = new Favorite($request->all());
+        $favorite->save();
 
-        $newFavorite = Favorite::where('id', $school->id)->get()->first()->toArray();
+        $newFavorite = Favorite::where('id', $favorite->id)->get()->first()->toArray();
 
-        return response()->json(['school' => $newFavorite, 'message' => 'La escuela se guardo exitosamente.']);
+        return response()->json(['favorite' => $newFavorite, 'message' => 'Quote has been saved as favorite.']);
     }
 
     /**
@@ -47,6 +47,6 @@ class FavoriteController extends Controller
     {
         $favorite = Favorite::find($favoriteId);
         $favorite->delete();
-        return response()->json(['message' => 'La cita de Kanye West se elimino exitosamente.']);
+        return response()->json(['message' => 'Quote Kanye West successfully deleted.']);
     }
 }

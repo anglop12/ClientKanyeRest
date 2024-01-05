@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\QuoteController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +28,15 @@ Route::middleware('passport')->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
-        Route::get('/quote', [QuoteController::class, 'index'])->name('get.quote');
+        Route::middleware('throttle:rate_limit,30')->get('/quote', [QuoteController::class, 'index'])->name('get.quote');
         Route::get('/quotes/{num}', [QuoteController::class, 'indexMulti'])->name('get.quotes');
+
         Route::get('/favorites', [FavoriteController::class, 'index'])->name('get.favorites');
         Route::post('/favorites', [FavoriteController::class, 'store'])->name('save.favorites');
         Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('delete.favorites');
+
+        Route::get('/users', [UserController::class, 'index'])->name('get.users');
+        Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('delete.user');
     });
 });
 

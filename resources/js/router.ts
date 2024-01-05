@@ -37,6 +37,12 @@ const route = createRouter({
       component: () => import('./pages/Favorites.vue'),
       meta: {requiresAuth: true}
     },
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('./pages/Users.vue'),
+      meta: {requiresAuth: true}
+    },
   ],
 });
 

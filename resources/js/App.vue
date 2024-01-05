@@ -32,9 +32,9 @@
 
             <v-list density="compact" nav>
                 <v-list-item to="/home" icon="mdi-folder" title="Home" value="Home"></v-list-item>
-                <v-list-item v-if="authStore.user?.role == 'admin'" to="/auths" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
                 <v-list-item to="/quotes" icon="mdi-account-multiple" title="Quotes" value="Quotes"></v-list-item>
                 <v-list-item to="/favorites" icon="mdi-star" title="Favorites" value="Favorites"></v-list-item>
+                <v-list-item v-if="authStore.user?.role == 'admin'" to="/users" icon="mdi-star" title="Users" value="Users"></v-list-item>
             </v-list>
 
             <template v-slot:append>
