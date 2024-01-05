@@ -1,8 +1,19 @@
 <template>
     <v-layout>
-        <v-app-bar color="primary" prominent v-if="this.$route.name != 'login' && this.$route.name != 'register'">
+        <v-app-bar color="primary" prominent>
             <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
             <v-toolbar-title>Test Kanye West Quotes</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn class="ml-2" v-if="!userStore.getAuth" to="/register">
+                Register
+            </v-btn>
+
+            <v-btn class="ml-2" v-if="!userStore.getAuth" to="/login">
+                Login
+            </v-btn>
         </v-app-bar>
 
         <v-navigation-drawer
@@ -12,9 +23,8 @@
         >
             <v-list>
                 <v-list-item
-                prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-                title="Sandra Adams"
-                subtitle="sandra_a88@gmailcom"
+                :title="userStore.user?.name"
+                :subtitle="userStore.user?.email"
                 ></v-list-item>
             </v-list>
 
@@ -29,12 +39,12 @@
 
             <template v-slot:append>
                 <div class="pa-2">
-                    <v-btn v-if="userStore.getAuth" @click="logout()" block>
-                        Logout
-                    </v-btn>
-                    <v-btn to="/login" v-else block>
-                        Login
-                    </v-btn>
+                <v-btn v-if="userStore.getAuth" @click="logout()" block>
+                    Logout
+                </v-btn>
+                <v-btn to="/login" v-else block>
+                    Login
+                </v-btn>
                 </div>
             </template>
         </v-navigation-drawer>

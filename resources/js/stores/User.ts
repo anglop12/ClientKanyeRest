@@ -1,6 +1,17 @@
 import { defineStore } from 'pinia'
 import axios from '../axios'
 
+interface UserLogin {
+    user: string;
+    email: string;
+}
+
+interface UserRegister {
+    name: string;
+    email: string;
+    password: string;
+}
+
 interface User {
     name: string;
     email: string;
@@ -40,8 +51,18 @@ export const useUser = defineStore('user', {
                 localStorage.removeItem('token');
             });
         },
-        async login(credentials : { user: string, password: string }) {
+        async login(credentials : UserLogin) {
             await axios.post('api/login', credentials).then(response => {
+                this.token = response.data.access_token;
+                localStorage.setItem('token', this.token);
+                this.auth = Boolean(this.token);
+                this.user = response.data.user;
+            }).catch((error) => {
+                this.response = error.response.data;
+            });
+        },
+        async register(credentials : UserRegister) {
+            await axios.post('api/register', credentials).then(response => {
                 this.token = response.data.access_token;
                 localStorage.setItem('token', this.token);
                 this.auth = Boolean(this.token);

@@ -20,16 +20,22 @@ const route = createRouter({
       meta: {requiresAuth: false}
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('./pages/Register.vue'),
+      meta: {requiresAuth: false}
+    },
+    {
       path: '/quotes',
       name: 'quotes',
       component: () => import('./pages/Quotes.vue'),
-      meta: {requiresAuth: false}
+      meta: {requiresAuth: true}
     },
     {
       path: '/favorites',
       name: 'favorites',
       component: () => import('./pages/Favorites.vue'),
-      meta: {requiresAuth: false}
+      meta: {requiresAuth: true}
     },
   ],
 });
