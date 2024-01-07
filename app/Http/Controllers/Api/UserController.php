@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('favorites')->get()->toArray();
+        $users = User::with('favorites')->whereNot('role', 'admin')->get()->toArray();
         return response()->json($users);
     }
 
