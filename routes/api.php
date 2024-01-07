@@ -28,7 +28,7 @@ Route::middleware('passport')->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
-        Route::middleware('throttle:rate_limit,30')->get('/quote', [QuoteController::class, 'index'])->name('get.quote');
+        Route::middleware('throttle:30,1')->get('/quote', [QuoteController::class, 'index'])->name('get.quote');
         Route::get('/quotes/{num}', [QuoteController::class, 'indexMulti'])->name('get.quotes');
 
         Route::get('/favorites', [FavoriteController::class, 'index'])->name('get.favorites');
