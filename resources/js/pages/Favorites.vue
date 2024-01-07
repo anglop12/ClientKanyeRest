@@ -3,7 +3,7 @@
     <v-row justify="center">
         <v-col cols="12">
             <v-sheet class="flex-1-1-100 ma-2 pa-2">
-                <v-card class="mx-auto">
+                <v-card class="mx-auto" max-width="850">
 
                     <v-card-title>
 

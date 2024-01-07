@@ -4,7 +4,7 @@
     <v-row justify="center">
         <v-col cols="12">
             <v-sheet class="flex-1-1-100 ma-2 pa-2">
-                <v-card class="mx-auto">
+                <v-card class="mx-auto" max-width="850">
 
                     <v-card-title>
 
@@ -20,60 +20,58 @@
                     <v-divider></v-divider>
 
 
-                    <v-card class="mx-auto px-6 py-8" max-width="344">
-                        <v-form v-model="form" @submit.prevent="onEditAuth">
+                    <v-form v-model="form" @submit.prevent="onEditAuth" class="mx-auto px-6 py-8" max-width="450">
 
-                            <v-text-field
-                                v-model="name"
-                                :readonly="loading"
-                                :rules="[required]"
-                                class="mb-2"
-                                clearable
-                                label="Name"
-                            ></v-text-field>
+                        <v-text-field
+                            v-model="name"
+                            :readonly="loading"
+                            :rules="[required]"
+                            class="mb-2"
+                            clearable
+                            label="Name"
+                        ></v-text-field>
 
-                            <v-text-field
-                                v-model="email"
-                                :readonly="loading"
-                                :rules="[required]"
-                                class="mb-2"
-                                clearable
-                                label="Email"
-                            ></v-text-field>
+                        <v-text-field
+                            v-model="email"
+                            :readonly="loading"
+                            :rules="[required]"
+                            class="mb-2"
+                            clearable
+                            label="Email"
+                        ></v-text-field>
 
-                            <v-text-field
-                                v-model="password"
-                                :readonly="loading"
-                                clearable
-                                label="New Password"
-                                placeholder="New password"
-                            ></v-text-field>
+                        <v-text-field
+                            v-model="password"
+                            :readonly="loading"
+                            clearable
+                            label="New Password"
+                            placeholder="New password"
+                        ></v-text-field>
 
-                            <br>
+                        <br>
 
-                            <v-alert
-                                v-if="alert"
-                                type="error"
-                                closable
-                                icon="error"
-                                :text="msg"
-                            ></v-alert>
+                        <v-alert
+                            v-if="alert"
+                            type="error"
+                            closable
+                            icon="error"
+                            :text="msg"
+                        ></v-alert>
 
-                            <br>
+                        <br>
 
-                            <v-btn
-                                :disabled="!form"
-                                :loading="loading"
-                                block
-                                color="success"
-                                size="large"
-                                type="submit"
-                                variant="elevated"
-                            >
-                                Save
-                            </v-btn>
-                        </v-form>
-                    </v-card>
+                        <v-btn
+                            :disabled="!form"
+                            :loading="loading"
+                            block
+                            color="success"
+                            size="large"
+                            type="submit"
+                            variant="elevated"
+                        >
+                            Save
+                        </v-btn>
+                    </v-form>
 
                 </v-card>
             </v-sheet>
