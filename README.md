@@ -21,13 +21,15 @@ Pasos para la instalacion en el entorno local
 
 8.- Ejecutar el comando 'npm install' en su terminal.
 
-9.- Ejecutar el comando 'php artisan migrate --seed' en su terminal.
+9.- Ejecutar el comando 'php artisan passport:install' en su terminal.
 
-10.- Abrir una segunda terminal el directorio raiz del proyecto y ejecutar 'npm run dev'.
+10.- Ejecutar el comando 'php artisan migrate --seed' en su terminal.
 
-11.- Luego de los pasos anteriormente descritos ejecutar 'php artisan serve'.
+11.- Abrir una segunda terminal el directorio raiz del proyecto y ejecutar 'npm run dev'.
 
-12.- Las credenciales para iniciar sesion son las siguientes:
+12.- Luego de los pasos anteriormente descritos ejecutar 'php artisan serve'.
+
+13.- Las credenciales para iniciar sesion son las siguientes:
 
     User: admin@admin.com
     Pass: admin
