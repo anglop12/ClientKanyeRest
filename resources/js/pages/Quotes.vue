@@ -53,7 +53,7 @@
                                     </v-skeleton-loader></td>
                                     <td></td>
                                 </tr>
-                                <tr v-for="(item, index) in quoteStore.quotes" :key="index">
+                                <tr v-else v-for="(item, index) in quoteStore.quotes" :key="index">
                                     <td>{{ item.quote }}</td>
                                     <td class="text-right">
                                         <v-btn :disabled="favoriteStore.quotes.findIndex((element) => element.quote == item.quote) >= 0 ? true : false" @click="saveFavorites(item)" icon="star">
