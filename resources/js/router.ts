@@ -11,12 +11,18 @@ const route = createRouter({
       path: '/home',
       name: 'home',
       component: () => import('./pages/Home.vue'),
-      meta: {requiresAuth: false}
+      meta: {requiresAuth: true}
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('./pages/Login.vue'),
+      meta: {requiresAuth: false}
+    },
+    {
+      path: '/forbidden',
+      name: 'forbidden',
+      component: () => import('./pages/Forbidden.vue'),
       meta: {requiresAuth: false}
     },
     {
@@ -41,7 +47,7 @@ const route = createRouter({
       path: '/users',
       name: 'users',
       component: () => import('./pages/Users.vue'),
-      meta: {requiresAuth: true}
+      meta: {requiresAuth: true, requiresAdmin: true}
     },
   ],
 });

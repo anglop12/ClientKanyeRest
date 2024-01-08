@@ -105,6 +105,8 @@
     import { onMounted, ref } from 'vue';
     import { useUser } from '../stores/Users';
     import { useFavorite } from '../stores/Favorites';
+    import { useAuth } from '../stores/Auth';
+    import { useRouter } from 'vue-router';
 
     type Favorite = {
         id: number;
@@ -121,6 +123,10 @@
         favorites?: Favorite[];
     }
 
+    const userStore = useUser();
+    const authStore = useAuth();
+    const router = useRouter();
+
     const dialog = ref(false);
     const dialog2 = ref(false);
 
@@ -131,7 +137,6 @@
         role: '',
     });
 
-    const userStore = useUser();
 
     const deleteUser = async () => {
         await userStore.deleteUser(userShow.value)
@@ -156,6 +161,9 @@
     };
 
     onMounted(async () => {
+        if (authStore.user?.role != 'admin') {
+            router.push({ name: 'forbidden' })
+        }
         await userStore.getUsers()
     });
 
